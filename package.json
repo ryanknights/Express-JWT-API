@@ -1,0 +1,16 @@
+{
+  "name": "express-api",
+  "main": "server.js",
+  "engines": {
+    "node": "8.4.0"
+  },
+  "dependencies": {
+    "bcrypt": "*",
+    "body-parser": "~1.4.2",
+    "express": "~4.5.1",
+    "method-override": "~2.0.2",
+    "mongoose": "4.4.19",
+    "express-jwt": "*",
+    "jsonwebtoken": "*"
+  }
+}
