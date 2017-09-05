@@ -13,6 +13,8 @@ const app             = express(),
 
 const db = require('./app/config/db');
 
+console.log(db);
+
 const port = process.env.PORT || 4007; 
 
 app.use(bodyParser.json({limit: '50mb'}));
