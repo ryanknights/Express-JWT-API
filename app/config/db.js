@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.connect('mongodb://178.62.109.21/expressapi', (err) =>
+module.exports = mongoose.connect('mongodb://127.0.0.1/expressapi', (err) =>
 {
 	if (err)
 	{
