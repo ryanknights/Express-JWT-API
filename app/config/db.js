@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.connect('mongodb://ryanknights:182493Lauren@127.0.0.1/expressapi', (err) =>
+module.exports = mongoose.connect('mongodb://ryanknights:/`PxX;XHQ5kP5S?T@127.0.0.1/expressapi', (err) =>
 {
 	if (err)
 	{
