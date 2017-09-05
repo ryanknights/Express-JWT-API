@@ -14,12 +14,8 @@ exports.login = (req, res, next) =>
 		return res.send(400, 'Please enter a username and password');
 	}
 
-	console.log(User);
-
 	User.findOne({username : username}, (err, user) =>
 	{
-		console.log('Looked up user');
-
 		if (err)
 		{
 			return res.send(500, 'There was a problem finding the user');
