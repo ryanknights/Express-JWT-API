@@ -26,7 +26,7 @@ exports.login = (req, res, next) =>
 			return res.send(401);
 		}
 
-		user.comparePassword(password, (isMatch) =>
+		user.comparePassword(user.password, password, (isMatch) =>
 		{
 			console.log(isMatch);
 			if (!isMatch)
