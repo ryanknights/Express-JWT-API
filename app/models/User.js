@@ -68,13 +68,8 @@ userSchema.pre('save', function (next)
 
 userSchema.methods.comparePassword = function (password, callback)
 {
-	console.log(this);
-	
 	bcrypt.compare(password, this.password, function (err, isMatch)
 	{
-		console.log(password);
-		console.log(this.password);
-
 		if (err)
 		{
 			return callback(err);
