@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.set('debug', true);
+
 module.exports = mongoose.connect('mongodb://expressapiuser:HFK8938hUW03402mLD@127.0.0.1/expressapi', (err) =>
 {
 	if (err)
