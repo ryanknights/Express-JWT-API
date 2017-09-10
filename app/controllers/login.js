@@ -15,12 +15,14 @@ exports.login = (req, res, next) =>
 	}
 
 	User.findOne({username : username}, (err, user) =>
-	{
+	{	
+		console.log(err);
 		if (err)
 		{
 			return res.send(500, 'There was a problem finding the user');
 		}
 
+		console.log(user);
 		if (!user)
 		{
 			return res.send(401);
@@ -28,6 +30,7 @@ exports.login = (req, res, next) =>
 
 		user.comparePassword(password, (isMatch) =>
 		{
+			console.log(isMatch);
 			if (!isMatch)
 			{
 				return res.send(401);
