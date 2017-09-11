@@ -45,7 +45,7 @@ exports.refreshToken = (req, res, next) =>
 				return res.send(401);
 			}
 
-			let accessToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '10m'}); // Create new access token
+			let accessToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '10s'}); // Create new access token
 
 			return res.json({token : {access: accessToken, refresh: refreshToken}}); // Send back both tokens
 		});

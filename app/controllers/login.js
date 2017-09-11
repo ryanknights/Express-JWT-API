@@ -36,7 +36,7 @@ exports.login = (req, res, next) =>
 				return res.send(401);
 			}
 
-			let token = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '10m'}),
+			let token = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '10s'}),
 				refreshToken;
 
 			if (user.refreshToken === "false") // If user does not have a refresh token assigned
