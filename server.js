@@ -1,5 +1,8 @@
 "use strict";
 
+const env = require('node-env-file');
+env(__dirname + '/.env');
+
 const express         = require('express'),
 	  httpModule      = require('http');
 
@@ -9,10 +12,7 @@ const app             = express(),
 	  methodOverride  = require('method-override'),
 	  mongoose   	  = require('mongoose'),
 	  expressJwt      = require('express-jwt'),
-	  jwtSecret       = require('./app/config/secret'),
-	  env             = require('node-env-file');
-
-env(__dirname + '/.env');
+	  jwtSecret       = require('./app/config/secret');
 
 const db = require('./app/config/db');
 
