@@ -9,7 +9,10 @@ const app             = express(),
 	  methodOverride  = require('method-override'),
 	  mongoose   	  = require('mongoose'),
 	  expressJwt      = require('express-jwt'),
-	  jwtSecret       = require('./app/config/secret');
+	  jwtSecret       = require('./app/config/secret'),
+	  env             = require('node-env-file');
+
+env(__dirname + '/.env');
 
 const db = require('./app/config/db');
 

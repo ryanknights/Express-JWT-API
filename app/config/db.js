@@ -1,8 +1,17 @@
 const mongoose = require('mongoose');
 
-mongoose.set('debug', true);
+mongoose.set('debug', process.env.DB_DEBUG);
 
-module.exports = mongoose.connect('mongodb://expressapiuser:HFK8938hUW03402mLD@127.0.0.1/expressapi', (err) =>
+let connectionString = 'mongodb://';
+
+if (process.env.DB_AUTH === 'true')
+{
+	connectionString+= `${process.env.DB_USER}:${process.env.DB_PASSWORD}@`;
+}
+
+connectionString+= `${process.env.DB_HOST}/${process.env.DB_NAME}`;
+
+module.exports = mongoose.connect(connectionString, (err) =>
 {
 	if (err)
 	{
