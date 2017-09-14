@@ -16,13 +16,11 @@ exports.login = (req, res, next) =>
 
 	User.findOne({username : username}, (err, user) =>
 	{	
-		console.log(err);
 		if (err)
 		{
 			return res.send(500, 'There was a problem finding the user');
 		}
 
-		console.log(user);
 		if (!user)
 		{
 			return res.send(401);
@@ -30,18 +28,17 @@ exports.login = (req, res, next) =>
 
 		user.comparePassword(password, (isMatch) =>
 		{
-			console.log(isMatch);
 			if (!isMatch)
 			{
 				return res.send(401);
 			}
 
-			let token = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '10s'}),
+			let token = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : process.env.JWT_ACCESS_TOKEN_DURATION}),
 				refreshToken;
 
 			if (user.refreshToken === "false") // If user does not have a refresh token assigned
 			{
-				refreshToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '365d'});
+				refreshToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : process.env.JWT_REFRESH_TOKEN_DURATION});
 				user.refreshToken = refreshToken;
 			}
 			else // User has a refresh token so try and verify it and renew if expired
@@ -50,7 +47,7 @@ exports.login = (req, res, next) =>
 				{
 					if (err && err.name === 'TokenExpiredError')
 					{
-						refreshToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : '365d'});
+						refreshToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : process.env.JWT_REFRESH_TOKEN_DURATION});
 						user.refreshToken = refreshToken;						
 					}
 				});

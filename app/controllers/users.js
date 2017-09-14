@@ -17,7 +17,7 @@ exports.retrieveUsers = (req, res, next) =>
 }
 
 exports.retrieveUser = (req, res, next) =>
-{
+{	
 	User.findOne({_id : req.params.id}, {password: 0}, (err, user) =>
 	{
 		if (err)
