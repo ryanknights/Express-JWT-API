@@ -37,7 +37,13 @@ app.use('/api/users', expressJwt({secret : jwtSecret.secret}));
 app.use('/api/users', require('./app/routes/users'));
 
 /**
-* Authentication | Protected
+* Posts | Protected
+**/
+app.use('/api/posts', expressJwt({secret : jwtSecret.secret}));
+app.use('/api/posts', require('./app/routes/posts'));
+
+/**
+* Authentication
 **/
 app.use('/api/authenticate', require('./app/routes/authenticate'));
 

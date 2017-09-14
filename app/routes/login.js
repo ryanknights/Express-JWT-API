@@ -7,6 +7,7 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
+	/*----------  Login User  ----------*/
 	api.post('/', loginCtrl.login);
 
 	return api;

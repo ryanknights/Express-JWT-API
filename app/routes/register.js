@@ -7,6 +7,7 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
+	/*----------  Register User  ----------*/
 	api.post('/', registerCtrl.register);
 
 	return api;
