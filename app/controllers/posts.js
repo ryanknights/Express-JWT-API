@@ -43,7 +43,7 @@ exports.addPost = (req, res, next) =>
 		return res.status(400).send('Please enter a title and content.');
 	}
 
-	const newPost = new Post({title: title, userId: req.user.userid});
+	const newPost = new Post({title: title, content: content, userId: req.user.userid});
 
 	newPost.save()
 		.then((post) => res.json({post: post}))
