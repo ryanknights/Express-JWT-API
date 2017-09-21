@@ -52,7 +52,20 @@ exports.addPost = (req, res, next) =>
 
 exports.deletePost = (req, res, next) =>
 {
+	Post.remove({_id : req.params.id}, (err, results) =>
+	{
+		if (err)
+		{
+			return res.send(500, 'There was a problem deleting the post');
+		}
 
+		if (!results)
+		{
+			return res.send(404, 'No post deleted');
+		}
+
+		return res.json({success: true});
+	});
 }
 
 exports.updatePost = (req, res, next) =>
