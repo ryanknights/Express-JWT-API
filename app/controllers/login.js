@@ -9,6 +9,7 @@ exports.login = (req, res, next) =>
 	let username = req.body.username || '',
 		password = req.body.password || '';
 
+	console.log(req.body);
 	console.log(username);
 	console.log(password);
 
