@@ -18,6 +18,7 @@ const db = require('./app/config/db');
 
 const port = process.env.PORT || 4007; 
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(methodOverride('X-HTTP-Method-Override'));
 
