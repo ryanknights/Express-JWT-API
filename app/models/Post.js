@@ -21,8 +21,8 @@ const postSchema = mongoose.Schema(
 	},
 	userId :
 	{
-		type    : Boolean,
-		default : false
+		type : mongoose.Schema.Types.ObjectId,
+		ref  : 'User'
 	}
 });
 
