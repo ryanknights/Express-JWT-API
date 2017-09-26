@@ -1,9 +1,9 @@
 "use strict"
 
-const express   = require('express'),
-	  expressJwt      = require('express-jwt'),
-	  jwtSecret       = require('../config/secret'),
-	  usersCtrl = require('../controllers/users');
+const express     = require('express'),
+	  expressJwt  = require('express-jwt'),
+	  jwtSecret   = require('../config/secret'),
+	  usersCtrl   = require('../controllers/users');
 	
 module.exports = (() =>
 {
@@ -11,7 +11,6 @@ module.exports = (() =>
 
 	api.use(expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
 	{
-		console.log(req.user);
 		if (!req.user || !req.user.isAdmin)
 		{
 			return res.sendStatus(403);

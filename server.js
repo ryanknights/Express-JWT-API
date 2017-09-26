@@ -32,19 +32,18 @@ app.use('/api', (req, res, next) =>
 	{
 		return res.sendStatus(200);
 	}
-	
+
 	next();	
 });
 
 /**
-* Users | Protected
+* Users
 **/
 app.use('/api/users', require('./app/routes/users'));
 
 /**
-* Posts | Protected
+* Posts
 **/
-app.use('/api/posts', expressJwt({secret : jwtSecret.secret}));
 app.use('/api/posts', require('./app/routes/posts'));
 
 /**
@@ -53,7 +52,7 @@ app.use('/api/posts', require('./app/routes/posts'));
 app.use('/api/authenticate', require('./app/routes/authenticate'));
 
 /**
-* Login/Register | Not Protected
+* Login/Register
 **/
 app.use('/api/register', require('./app/routes/register'));
 app.use('/api/login', require('./app/routes/login'));

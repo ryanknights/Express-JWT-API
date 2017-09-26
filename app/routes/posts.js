@@ -1,11 +1,16 @@
 "use strict"
 
-const express   = require('express'),
-	  postsCtrl = require('../controllers/posts');
+const express     = require('express'),
+	  expressJwt  = require('express-jwt'),
+	  jwtSecret   = require('../config/secret'),
+	  postsCtrl   = require('../controllers/posts');
 	
 module.exports = (() =>
 {
 	var api = express.Router();
+
+	/*----------  Secure Route  ----------*/
+	api.use(expressJwt({secret : jwtSecret.secret}));
 
 	/*----------  Retrieve Posts  ----------*/
 	api.get('/', postsCtrl.retrievePosts);
