@@ -7,18 +7,18 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
-	api.use((req, res, next) => 
-	{
-		console.log(req);
-		console.log(req.user);
+	// api.use((req, res, next) => 
+	// {
+	// 	console.log(req);
+	// 	console.log(req.user);
 
-		if (!req.user || !req.user.isAdmin)
-		{
-			return res.send(403);
-		}
+	// 	if (!req.user || !req.user.isAdmin)
+	// 	{
+	// 		return res.send(403);
+	// 	}
 
-		next();		
-	});
+	// 	next();		
+	// });
 
 	/*----------  Retrieve Users  ----------*/
 	api.get('/', usersCtrl.retrieveUsers);
