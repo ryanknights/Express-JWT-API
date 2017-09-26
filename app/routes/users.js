@@ -9,15 +9,15 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
-	api.use((req, res, next) =>
+	api.all((req, res, next) =>
 	{
 		console.log('Middleware 1');
 		next();
 	});
 
-	api.use(expressJwt({secret : jwtSecret.secret}));
+	api.all(expressJwt({secret : jwtSecret.secret}));
 
-	api.use((req, res, next) =>
+	api.all((req, res, next) =>
 	{
 		console.log('Middleware 2');
 		next();
