@@ -9,23 +9,38 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
-	api.use((req, res, next) =>
+	// api.use((req, res, next) =>
+	// {
+	// 	console.log('Middleware 1');
+	// 	next();
+
+	// }, (req, res, next) =>
+	// {
+	// 	console.log('Middleware 2');
+	// 	console.log(req.user);
+	// 	next();		
+	// }, 
+	// expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
+	// {
+	// 	console.log('Middleware 3');
+	// 	console.log(req.user);
+	// 	next();
+	// });
+
+	api.use((req, res, next) => 
 	{
 		console.log('Middleware 1');
-		next();
+		
+	}, expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
+	{
+		console.log(req.user);
+		if (!req.user || !req.user.isAdmin)
+		{
+			return res.sendStatus(403);
+		}
 
-	}, (req, res, next) =>
-	{
-		console.log('Middleware 2');
-		console.log(req.user);
-		next();		
-	}, 
-	expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
-	{
-		console.log('Middleware 3');
-		console.log(req.user);
 		next();
-	});
+	});	
 
 	/*----------  Retrieve Users  ----------*/
 	api.get('/', usersCtrl.retrieveUsers);
