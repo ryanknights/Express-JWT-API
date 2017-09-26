@@ -4,6 +4,8 @@ const User = require('../models/User');
 
 exports.retrieveUsers = (req, res, next) =>
 {
+	console.log(req.user);
+	
 	User.find({}, {password: 0}, (err, users) =>
 	{
 		if (err)
