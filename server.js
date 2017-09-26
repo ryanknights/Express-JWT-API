@@ -33,7 +33,19 @@ app.use('/api', (req, res, next) =>
 /**
 * Users | Protected
 **/
-app.use('/api/users', expressJwt({secret : jwtSecret.secret}));
+app.use('/api/users', expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
+{
+	console.log(req);
+	console.log(req.user);
+
+	if (!req.user || !req.user.isAdmin)
+	{
+		return res.send(403);
+	}
+
+	next();		
+});
+
 app.use('/api/users', require('./app/routes/users'));
 
 /**
