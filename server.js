@@ -33,7 +33,7 @@ app.use('/api', (req, res, next) =>
 /**
 * Users | Protected
 **/
-app.use('/api/users', expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
+app.use('/api/users', (req, res, next) =>
 {
 	console.log(req);
 	console.log(req.user);
@@ -44,7 +44,7 @@ app.use('/api/users', expressJwt({secret : jwtSecret.secret}), (req, res, next) 
 	}
 
 	next();		
-});
+}, expressJwt({secret : jwtSecret.secret}));
 
 app.use('/api/users', require('./app/routes/users'));
 
