@@ -19,17 +19,13 @@ module.exports = (() =>
 		console.log('Middleware 2');
 		console.log(req.user);
 		next();		
-	});
-
-	api.use(expressJwt({secret : jwtSecret.secret}));
-
-	api.use((req, res, next) =>
-	{	
-		console.log(req.url);
+	}, 
+	expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
+	{
 		console.log('Middleware 3');
 		console.log(req.user);
 		next();
-	});	
+	});
 
 	/*----------  Retrieve Users  ----------*/
 	api.get('/', usersCtrl.retrieveUsers);
