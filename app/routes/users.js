@@ -30,7 +30,8 @@ module.exports = (() =>
 	api.use((req, res, next) => 
 	{
 		console.log('Middleware 1');
-		
+		next();
+
 	}, expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
 	{
 		console.log(req.user);
