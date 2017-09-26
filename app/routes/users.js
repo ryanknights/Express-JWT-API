@@ -7,7 +7,7 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
-	api.use((req, res) => 
+	api.use((req, res, next) => 
 	{
 		console.log(req.user);
 
