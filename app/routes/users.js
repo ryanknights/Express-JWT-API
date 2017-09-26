@@ -9,6 +9,8 @@ module.exports = (() =>
 
 	api.use((req, res) => 
 	{
+		console.log(req.user);
+
 		if (!req.user || !req.user.isAdmin)
 		{
 			return res.send(403);
