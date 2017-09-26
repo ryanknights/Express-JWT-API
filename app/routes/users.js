@@ -2,7 +2,7 @@
 
 const express   = require('express'),
 	  expressJwt      = require('express-jwt'),
-	  jwtSecret       = require('../config/secret');
+	  jwtSecret       = require('../config/secret'),
 	  usersCtrl = require('../controllers/users');
 	
 module.exports = (() =>
