@@ -9,18 +9,17 @@ module.exports = (() =>
 {
 	var api = express.Router();
 
-	api.use(expressJwt({secret : jwtSecret.secret}), (req, res, next) => 
+	api.use((req, res, next) =>
 	{
-		console.log(req);
-		console.log(req.user);
-
-		if (!req.user || !req.user.isAdmin)
-		{
-			return res.send(403);
-		}
-
-		next();		
+		console.log('Middleware 1');
 	});
+
+	api.use(expressJwt({secret : jwtSecret.secret}));
+
+	api.use((req, res, next) =>
+	{
+		console.log('Middleware 2');
+	});	
 
 	/*----------  Retrieve Users  ----------*/
 	api.get('/', usersCtrl.retrieveUsers);
