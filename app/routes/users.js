@@ -12,6 +12,7 @@ module.exports = (() =>
 	api.use((req, res, next) =>
 	{
 		console.log('Middleware 1');
+		next();
 	});
 
 	api.use(expressJwt({secret : jwtSecret.secret}));
@@ -19,6 +20,7 @@ module.exports = (() =>
 	api.use((req, res, next) =>
 	{
 		console.log('Middleware 2');
+		next();
 	});	
 
 	/*----------  Retrieve Users  ----------*/
