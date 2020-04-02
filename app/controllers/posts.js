@@ -10,7 +10,7 @@ exports.retrievePosts = (req, res, next) =>
 		{
 			return res.send(500, 'There was a problem retrieving the posts');
 		}
-		
+
 		return res.json({posts: posts});
 	});
 }
@@ -39,7 +39,7 @@ exports.addPost = (req, res, next) =>
 		  content = req.body.content || '';
 
 	if (title === '' || content === '')
-	{	
+	{
 		return res.status(400).send('Please enter a title and content.');
 	}
 
@@ -52,7 +52,7 @@ exports.addPost = (req, res, next) =>
 
 exports.deletePost = (req, res, next) =>
 {
-	Post.remove({_id : req.params.id}, (err, results) =>
+	Post.deleteOne({_id : req.params.id}, (err, results) =>
 	{
 		if (err)
 		{

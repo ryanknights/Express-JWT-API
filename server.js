@@ -1,7 +1,6 @@
 "use strict";
 
-const env = require('node-env-file');
-env(__dirname + '/.env');
+const env = require('dotenv').config();
 
 const express         = require('express'),
 	  httpModule      = require('http');
@@ -16,7 +15,7 @@ const app             = express(),
 
 const db = require('./app/config/db');
 
-const port = process.env.PORT || 4007; 
+const port = process.env.PORT || 4007;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -33,7 +32,7 @@ app.use('/api', (req, res, next) =>
 		return res.sendStatus(200);
 	}
 
-	next();	
+	next();
 });
 
 /**
@@ -60,7 +59,7 @@ app.use('/api/login', require('./app/routes/login'));
 /**
 * Error Handling
 **/
-app.use((err, req, res, next) => 
+app.use((err, req, res, next) =>
 {
 	console.log(err.message);
 
@@ -71,7 +70,7 @@ app.use((err, req, res, next) =>
 
 	if (err.message === 'invalid token' || err.message === 'invalid signature' || err.message === 'jwt malformed' || err.message === 'No authorization token was found')
 	{
-		return res.send(401, 'Invalid Token');	
+		return res.send(401, 'Invalid Token');
 	}
 
 	return res.send(500);
