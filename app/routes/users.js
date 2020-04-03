@@ -1,30 +1,19 @@
-"use strict"
+const express = require('express');
+const usersController = require('../controllers/users');
+const authJwt = require('../modules/authJwt');
+const authAdmin = require('../modules/authAdmin');
 
-const express     = require('express'),
-	  expressJwt  = require('express-jwt'),
-	  jwtSecret   = require('../config/secret'),
-	  usersCtrl   = require('../controllers/users');
-	
-module.exports = (() =>
-{
-	var api = express.Router();
+module.exports = (() => {
+  const api = express.Router();
 
-	api.use(expressJwt({secret : jwtSecret.secret}), (req, res, next) =>
-	{
-		if (!req.user || !req.user.isAdmin)
-		{
-			return res.sendStatus(403);
-		}
+  api.use(authJwt);
+  api.use(authAdmin);
 
-		next();
-	});	
+  /* ----------  Retrieve Users  ----------*/
+  api.get('/', usersController.retrieveUsers);
 
-	/*----------  Retrieve Users  ----------*/
-	api.get('/', usersCtrl.retrieveUsers);
-	
-	/*----------  Delete User  ----------*/
-	api.delete('/:id', usersCtrl.deleteUser);
-	
-	return api;
+  /* ----------  Delete User  ----------*/
+  api.delete('/:id', usersController.deleteUser);
 
+  return api;
 })();

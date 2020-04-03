@@ -1,32 +1,27 @@
-"use strict"
+const express = require('express');
+const postsController = require('../controllers/posts');
+const authJwt = require('../modules/authJwt');
 
-const express     = require('express'),
-	  expressJwt  = require('express-jwt'),
-	  jwtSecret   = require('../config/secret'),
-	  postsCtrl   = require('../controllers/posts');
-	
-module.exports = (() =>
-{
-	var api = express.Router();
+module.exports = (() => {
+  const api = express.Router();
 
-	/*----------  Secure Route  ----------*/
-	api.use(expressJwt({secret : jwtSecret.secret}));
+  /* ----------  Secure Route  ----------*/
+  api.use(authJwt);
 
-	/*----------  Retrieve Posts  ----------*/
-	api.get('/', postsCtrl.retrievePosts);
+  /* ----------  Retrieve Posts  ----------*/
+  api.get('/', postsController.retrievePosts);
 
-	/*----------  Retrieve Posts  ----------*/
-	api.post('/', postsCtrl.addPost);
+  /* ----------  Retrieve Posts  ----------*/
+  api.post('/', postsController.addPost);
 
-	/*----------  Retrieve Post  ----------*/
-	api.get('/:id', postsCtrl.retrievePost);
-	
-	/*----------  Delete Post  ----------*/
-	api.delete('/:id', postsCtrl.deletePost);
+  /* ----------  Retrieve Post  ----------*/
+  api.get('/:id', postsController.retrievePost);
 
-	/*----------  Update Post  ----------*/
-	api.put('/:id', postsCtrl.updatePost);
-	
-	return api;
+  /* ----------  Delete Post  ----------*/
+  api.delete('/:id', postsController.deletePost);
 
+  /* ----------  Update Post  ----------*/
+  api.put('/:id', postsController.updatePost);
+
+  return api;
 })();

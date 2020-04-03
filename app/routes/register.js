@@ -1,15 +1,11 @@
-"use strict"
+const express = require('express');
+const registerController = require('../controllers/register');
 
-const express      = require('express'),
-	  registerCtrl = require('../controllers/register');
+module.exports = (() => {
+  const api = express.Router();
 
-module.exports = (() =>
-{
-	var api = express.Router();
+  /* ----------  Register User  ----------*/
+  api.post('/', registerController.register);
 
-	/*----------  Register User  ----------*/
-	api.post('/', registerCtrl.register);
-
-	return api;
-
+  return api;
 })();

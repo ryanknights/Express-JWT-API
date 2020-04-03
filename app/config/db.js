@@ -11,7 +11,12 @@ if (process.env.DB_AUTH === 'true')
 
 connectionString+= `${process.env.DB_HOST}/${process.env.DB_NAME}`;
 
-module.exports = mongoose.connect(connectionString, (err) =>
+const config = {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+};
+module.exports = mongoose.connect(connectionString, config, (err) =>
 {
 	if (err)
 	{
