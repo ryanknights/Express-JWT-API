@@ -21,5 +21,9 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'import/no-cycle': 'off',
         "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+        "no-underscore-dangle": 'off',
+        "no-param-reassign": [2, {
+            "props": false
+        }]
     }
 };
