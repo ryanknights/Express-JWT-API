@@ -32,11 +32,7 @@ exports.refreshToken = (req, res, next) => {
       if (err || !user) {
         return res.send(401);
       }
-      const accessToken = jwt.sign(
-        { userid: user._id, isAdmin: user.isAdmin },
-        jwtSecret.secret,
-        { expiresIn: process.env.JWT_ACCESS_TOKEN_DURATION },
-      );
+      const accessToken = user.createAccessToken();
       return res.json(
         { token: { access: accessToken, refresh: refreshToken } },
       );
