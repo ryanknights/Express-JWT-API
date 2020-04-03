@@ -2,16 +2,21 @@
   "name": "express-api",
   "main": "server.js",
   "engines": {
-    "node": "8.4.0"
+    "node": ">=12.16.0"
   },
   "dependencies": {
-    "bcrypt": "*",
+    "bcrypt": "~4.0.1",
     "body-parser": "~1.4.2",
-    "express": "~4.15.5",
-    "express-jwt": "*",
-    "jsonwebtoken": "*",
-    "method-override": "~2.0.2",
-    "mongoose": "4.4.19",
-    "node-env-file": "^0.1.8"
+    "dotenv": "^8.2.0",
+    "express": "~4.17.0",
+    "express-jwt": "~5.3.1",
+    "jsonwebtoken": "~8.5.1",
+    "method-override": "~3.0.0",
+    "mongoose": "~5.9.7"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-node": "^11.1.0"
   }
 }

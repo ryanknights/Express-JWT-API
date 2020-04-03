@@ -1,15 +1,11 @@
-"use strict"
+const express = require('express');
+const loginController = require('../controllers/login');
 
-const express   = require('express'),
-	  loginCtrl = require('../controllers/login');
+module.exports = (() => {
+  const api = express.Router();
 
-module.exports = (() =>
-{
-	var api = express.Router();
+  /* ----------  Login User  ----------*/
+  api.post('/', loginController.login);
 
-	/*----------  Login User  ----------*/
-	api.post('/', loginCtrl.login);
-
-	return api;
-
+  return api;
 })();

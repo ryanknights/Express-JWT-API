@@ -1,76 +1,63 @@
-"use strict";
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+const jwtSecret = require('../config/secret');
 
-const User      = require('../models/User'),
-	  jwt       = require('jsonwebtoken'),
-	  jwtSecret = require('../config/secret');
+exports.authenticate = (req, res, next) => {
+  if (!req.user) {
+    return res.send(401);
+  }
 
-exports.authenticate = (req, res, next) =>
-{
-	if (!req.user)
-	{
-		return res.send(401);
-	}
+  return User.findOne({ _id: req.user.userid }, (err, user) => {
+    if (err) {
+      return res.send(500, 'There was a problem finding the user');
+    }
 
-	User.findOne({_id: req.user.userid}, (err, user) =>
-	{
-		if (err)
-		{
-			return res.send(500, 'There was a problem finding the user');
-		}
+    if (!user) {
+      return res.send(401, 'No user could be found');
+    }
 
-		if (!user)
-		{
-			return res.send(401, 'No user could be found');
-		}
+    return res.json({ user: { username: user.username, userid: user._id, isAdmin: user.isAdmin } });
+  });
+};
 
-		return res.json({user : {username : user.username, userid : user._id, isAdmin : user.isAdmin}});
-	});	
-}
+exports.refreshToken = (req, res, next) => {
+  const refreshToken = req.body.token;
 
-exports.refreshToken = (req, res, next) =>
-{	
-	let refreshToken = req.body.token;
+  if (!refreshToken) {
+    return res.send(401);
+  }
 
-	if (!refreshToken) // No refresh token supplied
-	{
-		return res.send(401);
-	}
+  return jwt.verify(refreshToken, jwtSecret.secret, () => {
+    User.findOne({ refreshToken }, (err, user) => {
+      if (err || !user) {
+        return res.send(401);
+      }
+      const accessToken = jwt.sign(
+        { userid: user._id, isAdmin: user.isAdmin },
+        jwtSecret.secret,
+        { expiresIn: process.env.JWT_ACCESS_TOKEN_DURATION },
+      );
+      return res.json(
+        { token: { access: accessToken, refresh: refreshToken } },
+      );
+    });
+  });
+};
 
-	jwt.verify(refreshToken, jwtSecret.secret, (err, decoded) =>
-	{
-		User.findOne({refreshToken: refreshToken}, (err, user) => // Find a user with the supplied refresh token
-		{
-			if (err || !user) // Error finding user or no user exists with the supplied refresh token
-			{
-				return res.send(401);
-			}
+exports.revokeRefreshToken = (req, res, next) => {
+  const refreshToken = req.body.token;
 
-			let accessToken = jwt.sign({userid: user._id, isAdmin: user.isAdmin}, jwtSecret.secret, {expiresIn : process.env.JWT_ACCESS_TOKEN_DURATION}); // Create new access token
+  if (!refreshToken) {
+    return res.send(401);
+  }
 
-			return res.json({token : {access: accessToken, refresh: refreshToken}}); // Send back both tokens
-		});
-	});
-}
+  return jwt.verify(refreshToken, jwtSecret, () => {
+    User.update({ refreshToken }, { $set: { refreshToken: false } }, (err, result) => {
+      if (err || !result) {
+        return res.send(500, 'There was a problem revoking the refresh token');
+      }
 
-exports.revokeRefreshToken = (req, res, next) =>
-{
-	let refreshToken = req.body.token;
-
-	if (!refreshToken)
-	{
-		return res.send(401);
-	}
-
-	jwt.verify(refreshToken, jwtSecret, (err, decoded) =>
-	{
-		User.update({refreshToken : refreshToken}, {$set: {refreshToken: false}}, (err, result) =>
-		{
-			if (err || !result)
-			{
-				return res.send(500, 'There was a problem revoking the refresh token');
-			}
-
-			return res.json({success: true});
-		});
-	});
-}
+      return res.json({ success: true });
+    });
+  });
+};
