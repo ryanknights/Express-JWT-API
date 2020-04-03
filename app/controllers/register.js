@@ -9,7 +9,7 @@ exports.register = (req, res, next) =>
 		password = req.body.password || '';
 
 	if (username === '' || password === '' || email === '')
-	{	
+	{
 		return res.status(400).send('Please enter a username, password and email address.');
 	}
 
@@ -28,12 +28,12 @@ exports.register = (req, res, next) =>
 		let newUser = new User({username : username, email : email, password : password});
 
 		newUser.save((err) =>
-		{	
+		{
 			if (err)
 			{
 				return res.send(500, 'There was a problem saving the user.');
 			}
-			
+
 			return res.json({success : true});
 		});
 	});
