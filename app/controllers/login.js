@@ -24,38 +24,23 @@ exports.login = (req, res, next) => {
         return res.send(401);
       }
 
-      const token = jwt.sign(
-        { userid: user._id, isAdmin: user.isAdmin },
-        jwtSecret.secret,
-        { expiresIn: process.env.JWT_ACCESS_TOKEN_DURATION },
-      );
-      let refreshToken;
-
       if (user.refreshToken === 'false') {
-        refreshToken = jwt.sign(
-          { userid: user._id, isAdmin: user.isAdmin },
-          jwtSecret.secret,
-          { expiresIn: process.env.JWT_REFRESH_TOKEN_DURATION },
-        );
-        user.refreshToken = refreshToken;
+        user.refreshToken = user.createRefreshToken();
       } else {
         jwt.verify(user.refreshToken, jwtSecret.secret, () => {
           if (err && err.name === 'TokenExpiredError') {
-            refreshToken = jwt.sign(
-              { userid: user._id, isAdmin: user.isAdmin },
-              jwtSecret.secret,
-              { expiresIn: process.env.JWT_REFRESH_TOKEN_DURATION },
-            );
-            user.refreshToken = refreshToken;
+            user.refreshToken = user.createRefreshToken();
           }
         });
       }
+
+      const accessToken = user.createAccessToken();
 
       return user.save()
         .then(() => {
           res.json({
             user: { username: user.username, userid: user._id, isAdmin: user.isAdmin },
-            token: { access: token, refresh: user.refreshToken },
+            token: { access: accessToken, refresh: user.refreshToken },
           });
         });
     });

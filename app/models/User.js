@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const jwtSecret = require('../config/secret');
 
 const userSchema = mongoose.Schema({
   username: {
@@ -59,6 +61,22 @@ userSchema.methods.comparePassword = function (password, callback) {
 
     return callback(isMatch);
   });
+};
+
+userSchema.methods.createAccessToken = function () {
+  return jwt.sign(
+    { userid: this._id, isAdmin: this.isAdmin },
+    jwtSecret.secret,
+    { expiresIn: process.env.JWT_ACCESS_TOKEN_DURATION },
+  );
+};
+
+userSchema.methods.createRefreshToken = function () {
+  return jwt.sign(
+    { userid: this._id, isAdmin: this.isAdmin },
+    jwtSecret.secret,
+    { expiresIn: process.env.JWT_REFRESH_TOKEN_DURATION },
+  );
 };
 
 module.exports = mongoose.model('User', userSchema);
