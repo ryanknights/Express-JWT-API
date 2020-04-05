@@ -41,6 +41,7 @@ exports.login = (req, res, next) => {
           res.json({
             user: { username: user.username, userid: user._id, isAdmin: user.isAdmin },
             token: { access: accessToken, refresh: user.refreshToken },
+            test: { jenkinsbuild: true },
           });
         });
     });
