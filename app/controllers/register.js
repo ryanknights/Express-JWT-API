@@ -11,6 +11,7 @@ exports.register = (req, res, next) => {
 
   return User.findOne({ email }, (err, user) => {
     if (err) {
+      console.log(err);
       return res.send(500, 'There was a problem finding the user.');
     }
 
