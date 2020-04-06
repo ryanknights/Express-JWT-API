@@ -1,8 +1,12 @@
 {
   "name": "express-api",
-  "main": "server.js",
+  "main": "start.js",
   "engines": {
     "node": ">=12.16.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "bcrypt": "~4.0.1",
@@ -17,6 +21,8 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-node": "^11.1.0"
+    "eslint-plugin-node": "^11.1.0",
+    "jest": "^25.2.7",
+    "supertest": "^4.0.2"
   }
 }
