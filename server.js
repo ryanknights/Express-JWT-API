@@ -1,8 +1,11 @@
 const express = require('express');
 const httpModule = require('http');
+const env = require('dotenv');
+
+env.config();
 
 const app = express();
-const http = httpModule.Server(app);
+httpModule.Server(app);
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
