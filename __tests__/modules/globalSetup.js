@@ -4,6 +4,8 @@ const env = require('dotenv');
 module.exports = async () => {
   env.config();
   process.env.NODE_ENV = 'test';
+  process.env.adminId = '4edd40c86762e0fb12000001';
+  process.env.userId = '4edd40c86762e0fb12000002';
 
   const fixtures = new Fixtures({
     dir: '__tests__/fixtures',
