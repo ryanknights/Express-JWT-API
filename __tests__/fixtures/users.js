@@ -19,4 +19,13 @@ module.exports = [
     created: Date.now(),
     refreshToken: false,
   },
+  {
+    _id: mongoose.Types.ObjectId(),
+    username: 'duplicate',
+    email: 'duplicate@test.com',
+    password: '$2b$10$68wNObR18sm0TBPTJLDXz.kfkPsfvwHjAOPCWLflPUGyPJmE.0iwC',
+    isAdmin: false,
+    created: Date.now(),
+    refreshToken: false,
+  },
 ];
