@@ -1,16 +1,13 @@
 const express = require('express');
 const httpModule = require('http');
-
-const app = express();
-const http = httpModule.Server(app);
-const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
-
 const env = require('dotenv');
 
 env.config();
 
-const port = process.env.PORT || 4007;
+const app = express();
+httpModule.Server(app);
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 const routes = require('./app/routes/index');
 
@@ -33,5 +30,4 @@ routes(app);
 // Error Handling
 app.use(errorHandler);
 
-// Start Application
-http.listen(port, () => console.log(`App listening on port ${port}`));
+module.exports = app;
