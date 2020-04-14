@@ -1,14 +1,22 @@
 const mongoose = require('mongoose');
 
-mongoose.set('debug', process.env.DB_DEBUG);
+const isTest = (process.env.NODE_ENV === 'test');
+const debugKey = (!isTest) ? 'DB_DEBUG' : 'DB_TEST_DEBUG';
+const authKey = (!isTest) ? 'DB_AUTH' : 'DB_TEST_AUTH';
+const userKey = (!isTest) ? 'DB_USER' : 'DB_TEST_USER';
+const passwordKey = (!isTest) ? 'DB_PASSWORD' : 'DB_TEST_PASSWORD';
+const hostKey = (!isTest) ? 'DB_HOST' : 'DB_TEST_HOST';
+const nameKey = (!isTest) ? 'DB_NAME' : 'DB_TEST_NAME';
+
+mongoose.set('debug', process.env[debugKey]);
 
 let connectionString = 'mongodb://';
 
-if (process.env.DB_AUTH === 'true') {
-  connectionString += `${process.env.DB_USER}:${process.env.DB_PASSWORD}@`;
+if (process.env[authKey] === 'true') {
+  connectionString += `${process.env[userKey]}:${process.env[passwordKey]}@`;
 }
 
-connectionString += `${process.env.DB_HOST}/${process.env.DB_NAME}`;
+connectionString += `${process.env[hostKey]}/${process.env[nameKey]}`;
 
 const config = {
   useNewUrlParser: true,
@@ -20,5 +28,5 @@ module.exports = mongoose.connect(connectionString, config, (err) => {
   if (err) {
     return console.log(err);
   }
-  return console.log('DB Connected');
+  return true;
 });
