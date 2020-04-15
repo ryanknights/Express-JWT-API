@@ -19,6 +19,6 @@ exports.deleteUser = (req, res, next) => {
       return res.send(404, 'No user deleted');
     }
 
-    return res.json({ success: false });
+    return res.json({ success: true });
   });
 };
