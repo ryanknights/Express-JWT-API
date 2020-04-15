@@ -25,7 +25,7 @@ exports.register = (req, res, next) => {
         return res.send(500, 'There was a problem saving the user.');
       }
 
-      return res.json({ success: false });
+      return res.json({ success: true });
     });
   });
 };
